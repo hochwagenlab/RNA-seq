@@ -12,14 +12,14 @@ RNA-seq experiment analysis code
 
 ### Run as:
 
-`sbatch --export EXPID="for_output_files",RUNDIR="path/to/dir",\
- FQ="absolute/path/to/reads.fastq",\
+`sbatch --export EXPID="for_output_files",RUNDIR="path/to/dir",\\s
+ FQ="absolute/path/to/reads.fastq",\\s
  ~/Pipeline/Slurm/RNA-seq-sacCer3.sh`
 
 ### Example:
 
-`sbatch --export EXPID="AH119_3h",RUNDIR="scratch/lv38",\
- T_MAP="scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq" \
+`sbatch --export EXPID="AH119_3h",RUNDIR="scratch/lv38",\\s
+ T_MAP="scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq" \\s
  ~/Pipeline/Slurm/RNA-seq-sacCer3.sh`
 
 ## License
