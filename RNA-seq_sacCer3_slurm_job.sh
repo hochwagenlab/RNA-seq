@@ -2,7 +2,7 @@
 #SBATCH --verbose
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=8GB
+#SBATCH --mem=16GB
 #SBATCH --time=2:00:00
 #SBATCH --job-name=RNAseq_sacCer3
 #SBATCH --mail-type=FAIL
@@ -30,6 +30,7 @@
 
 #------------------------------------------------------------------------------#
 
+echo "Started pipeline:"
 date
 cd ${RUNDIR}
 
@@ -89,5 +90,5 @@ featureCounts -s 2 \
     ${EXPID}_sacCer3_TopHat2-nnjuncs/accepted_hits.bam
 
 
-echo "Done!"
+echo "Completed pipeline:"
 date
