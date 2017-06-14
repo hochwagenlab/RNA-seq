@@ -14,9 +14,8 @@
 #                                INSTRUCTIONS                                  #
 #------------------------------------------------------------------------------#
 # Dependencies:
-#     - Genome reference: .fasta and .gff
-#     - Bowtie2 index
-#       (Assumed to be in '~/Library/Bowtie2_sacCer3')
+#     - Genome reference files (.fasta and matching .gff)
+#     - .fastq file
 
 ### Argument options:
 # EXPID     Custom ID for output files
@@ -33,7 +32,7 @@
 ### EXAMPLE:
 # sbatch --export EXPID="AH119_3h",RUNDIR="/scratch/lv38",\
 # FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq",\
-# GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/Slurm/RNA-seq-sacCer3.sh
+# GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq_slurm_job.sh
 
 #------------------------------------------------------------------------------#
 

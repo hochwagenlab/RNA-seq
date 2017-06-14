@@ -5,9 +5,7 @@ RNA-seq experiment analysis code
 
 ### Dependencies:
 
-* Genome reference:
-    * `.fasta` file
-    * Matching `.gff` file
+* Genome reference files (`.fasta` and matching `.gff`)
 * `.fastq` file
 
 #### Argument options:
