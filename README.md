@@ -1,25 +1,27 @@
 # RNA-seq
 RNA-seq experiment analysis code
 
-## Fastq analysis pipeline: `RNA-seq_slurm_job.sh`
+## Fastq analysis pipeline:
+
+__`RNA-seq_slurm_job.sh`__
 
 ### Dependencies:
 
-* Genome reference files (`.fasta` and matching `.gff`)
-* `.fastq` file
+* Genome reference files (`FASTA` and matching `GFF`)
+* `FASTQ` file
 
 #### Argument options:
 
-* **EXPID**     Custom ID for output files
-* **RUNDIR**    Path to directory to run script and save output in
-* **FQ**        Absolute path to input fastq file
-* **GENDIR**    Absolute path to directory containing reference genome files.
+* __EXPID__     Custom ID for output files
+* __RUNDIR__    Path to directory to run script and save output in
+* __FQ__        Absolute path to input fastq file
+* __GENDIR__    Absolute path to directory containing reference genome files.
                 Must include:
-                    FASTA file
-                    Matching GFF file
-                An existing Bowtie2 index with a basename ("bt2_base") matching the
-                FASTA file name is used if found in the same directory; otherwise a
-                new index is built
+                    * `FASTA` file
+                    * matching `GFF` file
+                An existing Bowtie2 index with a basename (`bt2_base`) matching
+                the `FASTA` file name is used if found in the same directory;
+                otherwise a new index is built
 
 ### Example job submission:
 

@@ -14,8 +14,8 @@
 #                                INSTRUCTIONS                                  #
 #------------------------------------------------------------------------------#
 # Dependencies:
-#     - Genome reference files (.fasta and matching .gff)
-#     - .fastq file
+#     - Genome reference files (FASTA and matching GFF)
+#     - FASTA file
 
 ### Argument options:
 # EXPID     Custom ID for output files
