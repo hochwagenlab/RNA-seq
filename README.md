@@ -16,6 +16,7 @@ __`RNA-seq_slurm_job.sh`__
 * __RUNDIR__    Path to directory to run script and save output in
 * __FQ__        Absolute path to input fastq file
 * __GENDIR__    Absolute path to directory containing reference genome files.
+
                 Must include:
                     * `FASTA` file
                     * matching `GFF` file
