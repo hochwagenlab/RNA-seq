@@ -1,29 +1,35 @@
 # RNA-seq
 RNA-seq experiment analysis code
 
-## Fastq analysis pipeline: `RNA-seq_sacCer3_slurm_job.sh`
+## Fastq analysis pipeline: `RNA-seq_slurm_job.sh`
 
 ### Dependencies:
 
-* S288C sacCer3 genome reference: .fasta and .gff
-* Bowtie2 index
+* Genome reference:
+    * `.fasta` file
+    * Matching `.gff` file
+* `.fastq` file
 
-(must be in '~/Library/Bowtie2_sacCer3')
+#### Argument options:
 
-### Run as:
-<pre>
-sbatch --export EXPID="for_output_files",RUNDIR="path/to/dir",\
- FQ="absolute/path/to/reads.fastq",\
- ~/Pipeline/Slurm/RNA-seq-sacCer3.sh
-</pre>
+* **EXPID**     Custom ID for output files
+* **RUNDIR**    Path to directory to run script and save output in
+* **FQ**        Absolute path to input fastq file
+* **GENDIR**    Absolute path to directory containing reference genome files.
+                Must include:
+                    FASTA file
+                    Matching GFF file
+                An existing Bowtie2 index with a basename ("bt2_base") matching the
+                FASTA file name is used if found in the same directory; otherwise a
+                new index is built
 
-### Example:
+### Example job submission:
 
-<pre>
-sbatch --export EXPID="AH119_3h",RUNDIR="scratch/lv38",\
- T_MAP="scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq" \
- ~/Pipeline/Slurm/RNA-seq-sacCer3.sh
-</pre>
+```
+sbatch --export EXPID="AH119_3h",RUNDIR="/scratch/lv38",\
+FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq",\
+GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq_slurm_job.sh
+```
 
 ## License
 This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) file for details.
