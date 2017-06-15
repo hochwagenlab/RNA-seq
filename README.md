@@ -16,8 +16,8 @@ __`RNA-seq_slurm_job.sh`__
 * __FQ__        Absolute path to input fastq file
 * __GENDIR__    Absolute path to directory containing reference genome files.
 Must include:
-  * `FASTA` file
-  * matching `GFF` file.
+      * `FASTA` file
+      * matching `GFF` file.
 
 If an existing Bowtie2 index with a basename (`bt2_base`) matching the `FASTA` file name is
 found in the same directory it will be used; otherwise a new index is built
