@@ -39,6 +39,21 @@
 #                                  Functions                                   #
 #------------------------------------------------------------------------------#
 
+function elapsed_time() {
+    ENDTIME=$(date +%s)
+
+    TIME=$(($ENDTIME - $1))
+    if [ $(($TIME < 60)) ]
+    then
+        echo "$TIME seconds"
+    elif [ $(($TIME >= 60)) && $(($TIME < 3600)) ]
+    then
+        echo "$(($TIME / 60)) minutes"
+    else
+        echo "$(($TIME / 60 / 60)) hours"
+    fi
+}
+
 function check_arg() {
     if [ -z "$1" ]
     then
@@ -94,6 +109,7 @@ fi
 #                                                                              #
 #------------------------------------------------------------------------------#
 
+STARTTIME=$(date +%s)
 echo ">>>>> Started pipeline:"
 date
 
@@ -153,6 +169,6 @@ featureCounts -s 2 \
     -o ${EXPID}_featureCounts.txt \
     ${EXPID}_TopHat2-nnjuncs/accepted_hits.bam
 
-
-echo ">>>>> Completed pipeline:"
-date
+ELAPSEDTIME=$(elapsed_time $STARTTIME)
+echo "---"
+echo "Completed pipeline in $ELAPSEDTIME"
