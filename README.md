@@ -19,13 +19,16 @@ __`RNA-seq_slurm_job.sh`__
                 If an existing Bowtie2 index with a basename (`bt2_base`)
                 matching the `FASTA` file name is found in the same directory
                 it will be used; otherwise a new index is built
+* __FEAT__      `GFF` feature type (featureCounts arg `-t`; typically `FEAT="CDS"`)
+* __ATTR__      `GFF` attribute type used to group features (featureCounts arg `-g`; typically `ATTR="Name"`)
 
 ### Example job submission:
 
 ```
 sbatch --export EXPID="AH119_3h_SK1Yue",RUNDIR="/scratch/lv38",\
 FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq.gz",\
-GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq/RNA-seq_slurm_job.sh
+GENDIR="/home/lv38/Library/SK1Yue",FEAT="CDS",ATTR="Name" \
+~/Pipeline/RNA-seq/RNA-seq_slurm_job.sh
 ```
 
 ## License
