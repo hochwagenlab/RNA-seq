@@ -106,7 +106,7 @@ fi
 
 mkdir ${EXPID}/
 cd ${EXPID}/
-mkdir ${EXPID}_sacCer3_TopHat2-nnjuncs/
+mkdir ${EXPID}_TopHat2-nnjuncs/
 
 echo ">>>>> Map reads with TopHat2..."
 module purge
@@ -117,7 +117,7 @@ module load samtools/intel/1.3.1
 tophat2 -p 8 \
     --no-novel-juncs \
     --library-type fr-firststrand \
-    -o ${EXPID}_sacCer3_TopHat2-nnjuncs/ \
+    -o ${EXPID}_TopHat2-nnjuncs/ \
     -G $GFF \
     $GENDIR/$IX $FQ
 
@@ -130,9 +130,9 @@ echo ">>>>> Sort and index bam file for IGV..."
 module purge
 module load samtools/intel/1.3.1
 
-samtools sort -o ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam \
-    ${EXPID}_sacCer3_TopHat2-nnjuncs/accepted_hits.bam
-samtools index ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam
+samtools sort -o ${EXPID}_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam \
+    ${EXPID}_TopHat2-nnjuncs/accepted_hits.bam
+samtools index ${EXPID}_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam
 
 #------------------------------------------------------------------------------#
 #               Count reads with featureCounts (Subread package)               #
@@ -146,9 +146,9 @@ featureCounts -s 2 \
     -t CDS \
     -g Name \
     -a $GFF \
-    #-o ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}_featureCounts.txt \
+    #-o ${EXPID}_TopHat2-nnjuncs/${EXPID}_featureCounts.txt \
     -o ${EXPID}_featureCounts.txt \
-    ${EXPID}_sacCer3_TopHat2-nnjuncs/accepted_hits.bam
+    ${EXPID}_TopHat2-nnjuncs/accepted_hits.bam
 
 
 echo ">>>>> Completed pipeline:"
