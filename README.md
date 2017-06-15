@@ -23,7 +23,7 @@ __`RNA-seq_slurm_job.sh`__
 ### Example job submission:
 
 ```
-sbatch --export EXPID="AH119_3h",RUNDIR="/scratch/lv38",\
+sbatch --export EXPID="AH119_3h_SK1Yue",RUNDIR="/scratch/lv38",\
 FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq.gz",\
 GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq/RNA-seq_slurm_job.sh
 ```
