@@ -25,11 +25,14 @@
 #           An existing Bowtie2 index with a basename ("bt2_base") matching the
 #           FASTA file name is used if found in the same directory; otherwise a
 #           new index is built
+# FEAT      GFF feature type (featureCounts arg "-t")
+# ATTR      GFF attribute type used to group features (featureCounts arg "-g")
 
 ### EXAMPLE:
 # sbatch --export EXPID="AH119_3h",RUNDIR="/scratch/lv38",\
 # FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq",\
-# GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq_slurm_job.sh
+# GENDIR="/home/lv38/Library/SK1Yue",FEAT="CDS",ATTR="Name" \
+# ~/Pipeline/RNA-seq_slurm_job.sh
 
 
 #------------------------------------------------------------------------------#
@@ -53,6 +56,8 @@ check_arg $EXPID
 check_arg $RUNDIR 
 check_arg $FQ
 check_arg $GENDIR
+check_arg $FEAT
+check_arg $ATTR
 
 # Search for reference genome files; exit if not found
 FA=$(find $GENDIR -iname "*.fa*")
@@ -121,7 +126,6 @@ tophat2 -p 8 \
     -G $GFF \
     $GENDIR/$IX $FQ
 
-
 #------------------------------------------------------------------------------#
 #                       Sort and index BAM file for IGV                        #
 #------------------------------------------------------------------------------#
@@ -143,10 +147,9 @@ module purge
 module load subread/intel/1.5.1
 
 featureCounts -s 2 \
-    -t CDS \
-    -g Name \
+    -t $FEAT \
+    -g $ATTR \
     -a $GFF \
-    #-o ${EXPID}_TopHat2-nnjuncs/${EXPID}_featureCounts.txt \
     -o ${EXPID}_featureCounts.txt \
     ${EXPID}_TopHat2-nnjuncs/accepted_hits.bam
 
