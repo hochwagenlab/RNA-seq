@@ -13,9 +13,6 @@
 #------------------------------------------------------------------------------#
 #                                INSTRUCTIONS                                  #
 #------------------------------------------------------------------------------#
-# Dependencies:
-#     - Genome reference files (FASTA and matching GFF)
-#     - FASTA file
 
 ### Argument options:
 # EXPID     Custom ID for output files
@@ -34,31 +31,57 @@
 # FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq",\
 # GENDIR="/home/lv38/Library/SK1Yue" ~/Pipeline/RNA-seq_slurm_job.sh
 
+
+#------------------------------------------------------------------------------#
+#                                  Functions                                   #
 #------------------------------------------------------------------------------#
 
-echo ">>>>> Started pipeline:"
-date
+function check_arg() {
+    if [ -z "$1" ]
+    then
+        echo ">>>>> Please provide values for all required arguments"
+        exit 1
+    fi
+}
 
-# Find reference genome files
+#------------------------------------------------------------------------------#
+#                                  IO checks                                   #
+#------------------------------------------------------------------------------#
+
+# Check arguments
+check_arg $EXPID
+check_arg $RUNDIR 
+check_arg $FQ
+check_arg $GENDIR
+
+# Search for reference genome files; exit if not found
 FA=$(find $GENDIR -iname "*.fa*")
 GFF=$(find $GENDIR -iname "*.gff")
 
-# Exit if not found
 if [ -z "$FA" ] || [ -z "$GFF" ]
 then
-    echo ">>>>> Could not find reference genome files"; exit 1;
+    echo ">>>>> Could not find reference genome files"
+    echo "      (either FASTA or GFF or both)"
+    exit 1
 fi
 
-# Find Bowtie2 index (is there a file named as "fasta_base_name.1.bt2"?)
+# Abort if output directory already exists
+if [ -d "$RUNDIR$EXPID" ]
+then
+    echo ">>>>> Output directory already exists"
+    exit 1
+fi
+
+# Search for Bowtie2 index and build one if not found
+# (a file named according to rule "fasta_base_name.1.bt2")
 IX=$(basename $FA)                              # Drop path to file
 IX=${IX%.*}                                     # Drop extension
 CHECKIX=$(find $GENDIR -iname "${IX}.1.bt2")    # Search file
 #IX=$(basename $IX | cut -d '.' -f 1)
 
-# Build Bowtie2 index if not found
 if [ -z "$CHECKIX" ]
 then
-    echo ">>>>> Building Bowtie2 index"
+    echo ">>>>> Building Bowtie2 index..."
     module purge
     module load bowtie2/intel/2.2.9
     # Build index
@@ -67,17 +90,19 @@ then
 fi
 
 
-#--------------------------------------------#
-# Map reads to reference genome with TopHat2 #
-#--------------------------------------------#
+#------------------------------------------------------------------------------#
+#                                                                              #
+#                                Run pipeline                                  #
+#                                                                              #
+#------------------------------------------------------------------------------#
+
+echo ">>>>> Started pipeline:"
+date
+
+#------------------------------------------------------------------------------#
+#                 Align reads to reference genome with TopHat2                 #
+#------------------------------------------------------------------------------#
 cd $RUNDIR
-
-# Abort if output directory already exists
-if [ -d "$EXPID" ]
-then
-    echo ">>>>> Directory already exists"; exit 1;
-fi
-
 mkdir ${EXPID}/
 cd ${EXPID}/
 mkdir ${EXPID}_sacCer3_TopHat2-nnjuncs/
@@ -96,9 +121,9 @@ tophat2 -p 8 \
     $GENDIR/$IX $FQ
 
 
-#---------------------------------#
-# Sort and index BAM file for IGV #
-#---------------------------------#
+#------------------------------------------------------------------------------#
+#                       Sort and index BAM file for IGV                        #
+#------------------------------------------------------------------------------#
 
 echo ">>>>> Sort and index bam file for IGV..."
 module purge
@@ -108,9 +133,9 @@ samtools sort -o ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam \
     ${EXPID}_sacCer3_TopHat2-nnjuncs/accepted_hits.bam
 samtools index ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}-accepted_hits_s.bam
 
-#--------------------------------------------------#
-# Count reads with featureCounts (Subread package) #
-#--------------------------------------------------#
+#------------------------------------------------------------------------------#
+#               Count reads with featureCounts (Subread package)               #
+#------------------------------------------------------------------------------#
 
 echo ">>>>> Count reads with featureCounts..."
 module purge
@@ -120,7 +145,8 @@ featureCounts -s 2 \
     -t CDS \
     -g Name \
     -a $GFF \
-    -o ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}_featureCounts.txt \
+    #-o ${EXPID}_sacCer3_TopHat2-nnjuncs/${EXPID}_featureCounts.txt \
+    -o ${EXPID}_featureCounts.txt \
     ${EXPID}_sacCer3_TopHat2-nnjuncs/accepted_hits.bam
 
 
