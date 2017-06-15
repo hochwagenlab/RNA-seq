@@ -43,10 +43,10 @@ function elapsed_time() {
     ENDTIME=$(date +%s)
 
     TIME=$(($ENDTIME - $1))
-    if [ $(($TIME < 60)) ]
+    if [ $TIME -lt 60 ]
     then
         echo "$TIME seconds"
-    elif [ $(($TIME >= 60)) && $(($TIME < 3600)) ]
+    elif [ $TIME -ge 60 ]  && [ $TIME -lt 3600 ]
     then
         echo "$(($TIME / 60)) minutes"
     else
