@@ -65,13 +65,6 @@ then
     exit 1
 fi
 
-# Abort if output directory already exists
-if [ -d "$RUNDIR$EXPID" ]
-then
-    echo ">>>>> Output directory already exists"
-    exit 1
-fi
-
 # Search for Bowtie2 index and build one if not found
 # (a file named according to rule "fasta_base_name.1.bt2")
 IX=$(basename $FA)                              # Drop path to file
@@ -103,6 +96,14 @@ date
 #                 Align reads to reference genome with TopHat2                 #
 #------------------------------------------------------------------------------#
 cd $RUNDIR
+
+# Abort if output directory already exists
+if [ -d "$EXPID" ]
+then
+    echo ">>>>> Output directory already exists"
+    exit 1
+fi
+
 mkdir ${EXPID}/
 cd ${EXPID}/
 mkdir ${EXPID}_sacCer3_TopHat2-nnjuncs/
