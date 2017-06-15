@@ -20,11 +20,11 @@ __`RNA-seq_slurm_job.sh`__
 
 If an existing Bowtie2 index with a basename (`bt2_base`) matching the `FASTA` file name is
 found in the same directory it will be used; otherwise a new index is built
-* __FEAT__      `GFF` feature type (featureCounts arg `-t`). Suggested values:
+* __FEAT__      `GFF` feature type (featureCounts argument `-t`). Suggested values:
      * `FEAT="gene"` for SK1Yue
      * `FEAT="CDS"` for sacCer3 
 
-* __ATTR__      `GFF` attribute type used to group features (featureCounts arg `-g`). Suggested values:
+* __ATTR__      `GFF` attribute type used to group features (featureCounts argument `-g`). Suggested values:
      * `ATTR="ID"` for SK1Yue
      * `ATTR="Name"` for sacCer3
 
