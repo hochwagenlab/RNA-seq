@@ -5,10 +5,9 @@ RNA-seq experiment analysis code
 
 __`RNA-seq_slurm_job.sh`__
 
-### Dependencies:
-
-* Genome reference files (`FASTA` and matching `GFF`)
-* `FASTQ` file
+* Aligns `FASTQ` to specified reference genome
+* Sorts and indexes output `BAM` file to use in genome browser
+* Summarizes read counts per gene using `featureCounts`
 
 #### Argument options:
 
