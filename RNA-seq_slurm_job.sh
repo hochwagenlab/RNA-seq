@@ -74,6 +74,11 @@ check_arg $GENDIR
 check_arg $FEAT
 check_arg $ATTR
 
+# Check input files / dirs
+[ -f $FQ ] || { echo "Could not find file: $FQ"; exit 1; }
+[ -d $RUNDIR ] || { echo "Could not find directory: $RUNDIR"; exit 1; }
+[ -d $GENDIR ] || { echo "Could not find directory: $GENDIR"; exit 1; }
+
 # Search for reference genome files; exit if not found
 FA=$(find $GENDIR -iname "*.fa*")
 GFF=$(find $GENDIR -iname "*.gff")
@@ -174,4 +179,3 @@ ELAPSEDTIME=$(elapsed_time $STARTTIME)
 echo "-----"
 echo "-----"
 echo "Completed pipeline in $ELAPSEDTIME"
-
