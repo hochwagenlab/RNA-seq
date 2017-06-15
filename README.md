@@ -12,8 +12,11 @@ __`RNA-seq_slurm_job.sh`__
 #### Argument options:
 
 * __EXPID__     Custom ID for output files
+
 * __RUNDIR__    Path to directory to run script and save output in
+
 * __FQ__        Absolute path to input fastq file
+
 * __GENDIR__    Absolute path to directory containing reference genome files.
                 Must include:
                 * `FASTA` file
@@ -27,6 +30,7 @@ __`RNA-seq_slurm_job.sh`__
                 
                 * `FEAT="gene"` for SK1Yue
                 * `FEAT="CDS"` for sacCer3 
+
 * __ATTR__      `GFF` attribute type used to group features (featureCounts arg `-g`).
                 Suggested values:
                 
