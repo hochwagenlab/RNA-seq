@@ -169,6 +169,9 @@ featureCounts -s 2 \
     -o ${EXPID}_featureCounts.txt \
     ${EXPID}_TopHat2-nnjuncs/accepted_hits.bam
 
+#------------------------------------------------------------------------------#
 ELAPSEDTIME=$(elapsed_time $STARTTIME)
-echo "---"
+echo "-----"
+echo "-----"
 echo "Completed pipeline in $ELAPSEDTIME"
+
