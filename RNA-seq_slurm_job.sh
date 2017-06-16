@@ -81,7 +81,7 @@ GENNAME=$(basename "$GENNAME")
 [ -d $GENDIR ] || { echo "Could not find directory: $GENDIR"; exit 1; }
 
 # Search for reference genome files; exit if not found
-FA=$(finKIX=$(find $GENDIR -iname "${IX}.1.bt2")
+FA=$(find $GENDIR -iname "${GENNAME}.fa*")
 GFF=$(find $GENDIR -iname "${GENNAME}.gff")
 
 if [ -z "$FA" ] || [ -z "$GFF" ]
@@ -93,7 +93,8 @@ fi
 
 # Search for Bowtie2 index and build one if not found
 # (a file named according to rule "fasta_base_name.1.bt2")
-# This will return the full basename; $GENNAME might not include it in full
+# The following code will return the full basename
+# (the provided $GENNAME might not include it in full)
 IX=$(basename $FA)                              # Drop path to file
 IX=${IX%.*}                                     # Drop extension
 CHECKIX=$(find $GENDIR -iname "${IX}.1.bt2")    # Search file
