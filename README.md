@@ -18,11 +18,10 @@ __`RNA-seq_slurm_job.sh`__
                 containing the reference genome files. The directory must include:
      * `FASTA` file
      * matching `GFF` file.
-                Both files must use the same basename.
-                An existing Bowtie2 index with a basename ("bt2_base") matching the files'
-                is used if found in the same directory; otherwise a new index is built.
-If an existing Bowtie2 index with a matching basename (`bt2_base`) is found in the same
-directory it will be used; otherwise a new index is built.
+
+Both files must use the same basename. If an existing Bowtie2 index with a matching basename
+(Bowtie2's `bt2_base`) is found in the same directory it will be used;
+otherwise a new index is built.
 * __FEAT__      `GFF` feature type (featureCounts argument `-t`). Suggested values:
      * `FEAT="gene"` for SK1Yue
      * `FEAT="CDS"` for sacCer3
