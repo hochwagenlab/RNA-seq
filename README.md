@@ -14,12 +14,15 @@ __`RNA-seq_slurm_job.sh`__
 * __EXPID__     Custom ID for output files.
 * __RUNDIR__    Path to directory to run script and save output in.
 * __FQ__        Absolute path to input fastq file.
-* __GENDIR__    Absolute path to directory containing reference genome files. Must include:
+* __GENNAME__   Reference genome file basename preceded by absolute path to directory
+                containing the reference genome files. The directory must include:
      * `FASTA` file
      * matching `GFF` file.
-
-If an existing Bowtie2 index with a basename (`bt2_base`) matching the `FASTA` file name is
-found in the same directory it will be used; otherwise a new index is built.
+                Both files must use the same basename.
+                An existing Bowtie2 index with a basename ("bt2_base") matching the files'
+                is used if found in the same directory; otherwise a new index is built.
+If an existing Bowtie2 index with a matching basename (`bt2_base`) is found in the same
+directory it will be used; otherwise a new index is built.
 * __FEAT__      `GFF` feature type (featureCounts argument `-t`). Suggested values:
      * `FEAT="gene"` for SK1Yue
      * `FEAT="CDS"` for sacCer3
@@ -33,8 +36,8 @@ found in the same directory it will be used; otherwise a new index is built.
 ```
 sbatch --export EXPID="AH119_3h_SK1Yue",RUNDIR="/scratch/lv38",\
 FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq.gz",\
-GENDIR="/home/lv38/Library/SK1Yue",FEAT="gene",ATTR="ID" \
-~/Pipeline/RNA-seq/RNA-seq_slurm_job.sh
+GENNAME="/home/lv38/Library/SK1Yue/Yue.SK1.genome.nuclear.mito.2micr",\
+FEAT="gene",ATTR="ID" ~/Pipeline/RNA-seq/RNA-seq_slurm_job.sh
 ```
 
 ## License
