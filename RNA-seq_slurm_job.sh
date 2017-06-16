@@ -18,21 +18,20 @@
 # EXPID     Custom ID for output files
 # RUNDIR    Path to directory to run script and save output in
 # FQ        Absolute path to input fastq file
-# GENDIR    Absolute path to directory containing reference genome files.
-#           Must include:
-#               FASTA file
-#               Matching GFF file
+# GENNAME   Basename of reference genome files preceded by absolute path to
+#           directory containing the files. Must include a FASTA file and a
+#           matching GFF file wuth the same basename.
 #           An existing Bowtie2 index with a basename ("bt2_base") matching the
-#           FASTA file name is used if found in the same directory; otherwise a
-#           new index is built
+#           files' is used if found in the same directory; otherwise a new index
+#           is built
 # FEAT      GFF feature type (featureCounts arg "-t")
 # ATTR      GFF attribute type used to group features (featureCounts arg "-g")
 
 ### EXAMPLE:
 # sbatch --export EXPID="AH119_3h",RUNDIR="/scratch/lv38",\
 # FQ="/scratch/lv38/C8C2NACXX_l03n01_ah119-3-030316.3510000004e291.fastq",\
-# GENDIR="/home/lv38/Library/SK1Yue",FEAT="CDS",ATTR="Name" \
-# ~/Pipeline/RNA-seq_slurm_job.sh
+# GENNAME="/home/lv38/Library/SK1Yue/Yue.SK1.genome.nuclear.mito.2micr",\
+# FEAT="gene",ATTR="ID" ~/Pipeline/RNA-seq_slurm_job.sh
 
 
 #------------------------------------------------------------------------------#
@@ -70,18 +69,20 @@ function check_arg() {
 check_arg $EXPID
 check_arg $RUNDIR 
 check_arg $FQ
-check_arg $GENDIR
+check_arg $GENNAME
 check_arg $FEAT
 check_arg $ATTR
 
 # Check input files / dirs
 [ -f $FQ ] || { echo "Could not find file: $FQ"; exit 1; }
 [ -d $RUNDIR ] || { echo "Could not find directory: $RUNDIR"; exit 1; }
+GENDIR=$(dirname "$GENNAME")
+GENNAME=$(basename "$GENNAME")
 [ -d $GENDIR ] || { echo "Could not find directory: $GENDIR"; exit 1; }
 
 # Search for reference genome files; exit if not found
-FA=$(find $GENDIR -iname "*.fa*")
-GFF=$(find $GENDIR -iname "*.gff")
+FA=$(finKIX=$(find $GENDIR -iname "${IX}.1.bt2")
+GFF=$(find $GENDIR -iname "${GENNAME}.gff")
 
 if [ -z "$FA" ] || [ -z "$GFF" ]
 then
@@ -92,6 +93,7 @@ fi
 
 # Search for Bowtie2 index and build one if not found
 # (a file named according to rule "fasta_base_name.1.bt2")
+# This will return the full basename; $GENNAME might not include it in full
 IX=$(basename $FA)                              # Drop path to file
 IX=${IX%.*}                                     # Drop extension
 CHECKIX=$(find $GENDIR -iname "${IX}.1.bt2")    # Search file
