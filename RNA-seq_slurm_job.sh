@@ -20,7 +20,7 @@
 # FQ        Absolute path to input fastq file
 # GENNAME   Basename of reference genome files preceded by absolute path to
 #           directory containing the files. Must include a FASTA file and a
-#           matching GFF file wuth the same basename.
+#           matching GFF file with the same basename.
 #           An existing Bowtie2 index with a basename ("bt2_base") matching the
 #           files' is used if found in the same directory; otherwise a new index
 #           is built
